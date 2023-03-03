@@ -2,7 +2,7 @@ name: Cypress Tests
 
 on:
   push:
-    branches: ["main"]
+    branches: ["fix-frontend-start"]
   pull_request:
     branches: ["main"]
 
@@ -26,9 +26,11 @@ jobs:
           cd ./backend
           node app.js &
 
+      - run: node --version
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           working-directory: ./frontend
-          start: yarn dev --port 4001 &
+          start: yarn dev --port 4001 --host 127.0.0.1
           wait-on: 'http://localhost:4000, http://localhost:4001, '
